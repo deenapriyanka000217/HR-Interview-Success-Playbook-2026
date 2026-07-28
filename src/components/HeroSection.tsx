@@ -2,6 +2,7 @@ import React from 'react';
 import { CheckCircle2, ShieldCheck, Sparkles, Eye, ArrowRight, Star } from 'lucide-react';
 import { HERO_BENEFITS } from '../data/playbookData';
 import { handleCtaClick } from '../utils/ctaConfig';
+import playbookMockupImg from '../assets/images/hr_playbook_mockup_1785236765701.jpg';
 
 interface HeroSectionProps {
   onOpenCheckout?: () => void;
@@ -119,21 +120,31 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSamplePreview })
               {/* Subtle background glow frame */}
               <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 via-[#FFD700] to-blue-400 rounded-3xl blur-xl opacity-30 group-hover:opacity-50 transition duration-500"></div>
               
-              <div className="relative bg-[#002B5C] border border-blue-400/30 rounded-2xl p-3 sm:p-4 shadow-2xl">
+              <div className="relative bg-[#002B5C] border border-blue-400/30 rounded-2xl p-3 sm:p-4 shadow-2xl flex flex-col items-center">
                 <img
-                  src="/src/assets/images/hr_playbook_mockup_1785236765701.jpg"
+                  src={playbookMockupImg}
                   alt="HR Interview Success Playbook 2026 - 3D Mockup"
                   referrerPolicy="no-referrer"
-                  className="w-full h-auto object-cover rounded-xl shadow-lg border border-blue-900"
+                  className="w-full h-auto max-h-[460px] object-contain rounded-xl shadow-lg border border-blue-900/60 block"
+                  onError={(e) => {
+                    const target = e.currentTarget;
+                    if (!target.dataset.triedPublic) {
+                      target.dataset.triedPublic = "true";
+                      target.src = "/hr_playbook_mockup_1785236765701.jpg";
+                    } else if (!target.dataset.triedAssets) {
+                      target.dataset.triedAssets = "true";
+                      target.src = "/assets/images/hr_playbook_mockup_1785236765701.jpg";
+                    }
+                  }}
                 />
                 
-                {/* Floating Badge on Mockup */}
-                <div className="absolute bottom-6 left-6 right-6 bg-[#001B3D]/95 backdrop-blur border border-[#FFD700]/50 rounded-xl p-3 shadow-xl flex items-center justify-between">
+                {/* Instant Access & Price Badge */}
+                <div className="w-full bg-[#001B3D] border border-[#FFD700]/50 rounded-xl p-2.5 sm:p-3 shadow-xl flex items-center justify-between mt-3">
                   <div className="text-left">
-                    <p className="text-xs font-bold text-[#FFD700] uppercase tracking-wider">Instant Access PDF</p>
-                    <p className="text-xs text-blue-200 font-medium">50 Q&As • Payroll • HR Docs</p>
+                    <p className="text-[11px] sm:text-xs font-bold text-[#FFD700] uppercase tracking-wider">Instant Access PDF</p>
+                    <p className="text-[11px] sm:text-xs text-blue-200 font-medium">50 Q&As • Payroll • HR Docs</p>
                   </div>
-                  <div className="bg-[#FFD700] text-[#001B3D] text-xs font-black px-2.5 py-1 rounded-lg">
+                  <div className="bg-[#FFD700] text-[#001B3D] text-xs font-black px-2.5 py-1 rounded-lg shrink-0">
                     ₹299
                   </div>
                 </div>
