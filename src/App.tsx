@@ -134,9 +134,6 @@ export default function App() {
         onClose={() => setLegalType(null)}
       />
 
-      {/* META PIXEL STATUS DEBUGGER (Bottom Corner Widget) */}
-      <MetaPixelTrackerWidget />
-
     </div>
   );
 }
