@@ -28,7 +28,7 @@ export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) =
           if (onBackToLanding) {
             onBackToLanding();
           } else {
-            window.location.href = "/";
+            window.location.href = "/playbook";
           }
         }
         return prev - 1;
@@ -312,7 +312,7 @@ export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) =
                 onClick={onBackToLanding}
                 className="hover:text-white font-bold underline cursor-pointer"
               >
-                ← Back to Main Landing Page
+                ← Back to Playbook Landing Page
               </button>
             )}
           </div>

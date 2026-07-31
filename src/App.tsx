@@ -29,6 +29,38 @@ export default function App() {
     return isShortUrl || isQueryParam;
   });
 
+  // Keep browser URL synchronized (/playbook for landing page, /hr-thank-you for thank-you page)
+  useEffect(() => {
+    if (showThankYouPage) {
+      if (!window.location.pathname.includes('hr-thank-you')) {
+        window.history.replaceState({}, '', '/hr-thank-you');
+      }
+    } else {
+      if (window.location.pathname !== '/playbook') {
+        window.history.replaceState({}, '', '/playbook');
+      }
+    }
+  }, [showThankYouPage]);
+
+  // Handle browser back/forward navigation
+  useEffect(() => {
+    const handlePopState = () => {
+      const pathname = window.location.pathname.toLowerCase().replace(/\/$/, '');
+      const params = new URLSearchParams(window.location.search);
+      const isShortUrl = pathname.includes('hr-thank-you') || pathname.includes('hrthankyou') || pathname.includes('thank-you') || pathname.includes('thankyou');
+      const isQueryParam = params.get('thank_you') === 'true' || params.get('status') === 'success' || params.get('payment') === 'success';
+      setShowThankYouPage(isShortUrl || isQueryParam);
+    };
+
+    window.addEventListener('popstate', handlePopState);
+    return () => window.removeEventListener('popstate', handlePopState);
+  }, []);
+
+  const handleBackToLanding = () => {
+    setShowThankYouPage(false);
+    window.history.pushState({}, '', '/playbook');
+  };
+
   // Track PageView immediately when landing page mounts
   useEffect(() => {
     pixelTracker.trackPageView();
@@ -43,7 +75,7 @@ export default function App() {
   if (showThankYouPage) {
     return (
       <ThankYouPage
-        onBackToLanding={() => setShowThankYouPage(false)}
+        onBackToLanding={handleBackToLanding}
       />
     );
   }
