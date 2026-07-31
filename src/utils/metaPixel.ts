@@ -18,18 +18,18 @@ class MetaPixelTracker {
   }
 
   public trackPurchase(orderId?: string) {
-    if (!sessionStorage.getItem("hr_purchase_tracked")) {
-      const generatedId = orderId || "HR_299_" + Date.now();
-      this.fireEvent('Purchase', {
-        value: 299,
-        currency: 'INR',
-        content_name: 'HR Interview Success Playbook 2026',
-        content_type: 'digital_product',
-        order_id: generatedId
-      });
+    const generatedId = orderId || "HR_299_" + Date.now();
+    this.fireEvent('Purchase', {
+      value: 299,
+      currency: 'INR',
+      content_name: 'HR Interview Success Playbook 2026',
+      content_type: 'digital_product',
+      order_id: generatedId
+    });
+    try {
       sessionStorage.setItem("hr_purchase_tracked", "true");
-    } else {
-      console.log("[Meta Pixel] Purchase event already tracked in session.");
+    } catch {
+      // ignore session storage errors
     }
   }
 
