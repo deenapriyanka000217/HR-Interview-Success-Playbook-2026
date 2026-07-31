@@ -25,159 +25,34 @@ export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) =
 
     setTimeout(() => {
       try {
-        const doc = new jsPDF();
-        let y = 20;
-
-        // Cover / Header
-        doc.setFillColor(0, 27, 61); // Dark blue header
-        doc.rect(0, 0, 210, 35, 'F');
-
-        doc.setTextColor(255, 215, 0); // Gold text
-        doc.setFontSize(18);
-        doc.setFont("helvetica", "bold");
-        doc.text("HR INTERVIEW SUCCESS PLAYBOOK 2026", 15, 18);
-
-        doc.setTextColor(255, 255, 255);
-        doc.setFontSize(10);
-        doc.setFont("helvetica", "normal");
-        doc.text("From Fresher to Interview-Ready • Practical Edition for India", 15, 26);
-
-        y = 45;
-        doc.setTextColor(0, 20, 46);
-
-        // Section 1: Overview
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("1. TABLE OF CONTENTS", 15, y);
-        y += 8;
-
-        doc.setFontSize(9);
-        doc.setFont("helvetica", "normal");
-        const contents = [
-          "• Chapter 1 — Understanding the HR Career",
-          "• Chapter 2 — What Companies Expect From HR Freshers",
-          "• Chapter 3 — Job-Winning HR Resume",
-          "• Chapter 4 — 50 HR Interview Questions & Model Answers",
-          "• Chapter 5 — Recruitment: End-to-End Practical Guide",
-          "• Chapter 6 — HR Letters & Documents",
-          "• Chapter 7 — Salary & Payroll Basics (PF, ESI, PT, TDS)",
-          "• Chapter 8 — Excel Skills for HR (VLOOKUP, PivotTables, COUNTIF)",
-          "• Chapter 9 — Professional HR Communication",
-          "• Chapter 10 — First 30 Days in HR",
-          "• Chapter 11 — 90-Day Career Growth Roadmap"
-        ];
-        contents.forEach(line => {
-          doc.text(line, 15, y);
-          y += 5.5;
-        });
-
-        y += 5;
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("2. CORE INTERVIEW QUESTIONS & MODEL ANSWERS", 15, y);
-        y += 8;
-
-        doc.setFontSize(9);
-        const questions = [
-          "Q1. Tell me about yourself.",
-          "Answer: Present (Education) -> Relevant Exposure (Internship/Projects) -> Future Goal.",
-          "",
-          "Q2. Why did you choose HR?",
-          "Answer: Connect interest to real HR impact—recruitment, employee experience & operations.",
-          "",
-          "Q3. Why should we hire you?",
-          "Answer: Match skills to JD, highlight reliability, communication & willingness to learn.",
-          "",
-          "Q4. Gross Salary vs Net Salary?",
-          "Answer: Gross is total earnings before deductions; Net is take-home pay after PF, PT & TDS.",
-          "",
-          "Q5. Essential Excel skills for HR?",
-          "Answer: VLOOKUP/XLOOKUP, PivotTables, COUNTIF, SUMIF, IF formulas, and Data Validation."
-        ];
-        questions.forEach(line => {
-          if (line.startsWith("Q")) {
-            doc.setFont("helvetica", "bold");
-          } else {
-            doc.setFont("helvetica", "normal");
-          }
-          doc.text(line, 15, y);
-          y += 5;
-        });
-
-        y += 5;
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("3. SALARY & PAYROLL FORMULAS (INDIA)", 15, y);
-        y += 8;
-
-        doc.setFontSize(9);
-        doc.setFont("helvetica", "normal");
-        const payroll = [
-          "• Basic Salary: Core component (typically 40-50% of monthly CTC).",
-          "• HRA (House Rent Allowance): 50% of Basic for Metro / 40% for Non-Metro.",
-          "• EPF (Employee Provident Fund): 12% of Basic Salary (capped at Rs 1,800/month).",
-          "• ESI (Employee State Insurance): 0.75% Employee contribution if Gross <= Rs 21,000.",
-          "• Professional Tax (PT): State-level levy (typically Rs 200/month)."
-        ];
-        payroll.forEach(line => {
-          doc.text(line, 15, y);
-          y += 5.5;
-        });
-
-        // Add page 2 for WhatsApp community & remaining chapters
-        doc.addPage();
-        y = 20;
-
-        doc.setFillColor(0, 27, 61);
-        doc.rect(0, 0, 210, 25, 'F');
-        doc.setTextColor(255, 215, 0);
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("HR INTERVIEW SUCCESS PLAYBOOK 2026 - PART 2", 15, 16);
-
-        y = 35;
-        doc.setTextColor(0, 20, 46);
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("4. CANDIDATE WHATSAPP COMMUNITY", 15, y);
-        y += 8;
-
-        doc.setFontSize(9);
-        doc.setFont("helvetica", "normal");
-        doc.text("Join the VIP HR Freshers WhatsApp Community for daily interview updates and job alerts:", 15, y);
-        y += 6;
-        doc.setTextColor(0, 102, 204);
-        doc.setFont("helvetica", "bold");
-        doc.text(whatsappGroupUrl, 15, y);
-
-        y += 15;
-        doc.setTextColor(0, 20, 46);
-        doc.setFontSize(14);
-        doc.setFont("helvetica", "bold");
-        doc.text("5. 90-DAY HR CAREER ROADMAP", 15, y);
-        y += 8;
-
-        doc.setFontSize(9);
-        doc.setFont("helvetica", "normal");
-        doc.text("• Month 1 (Learn): Master recruitment flow, HR templates, email structure & confidentiality.", 15, y); y += 6;
-        doc.text("• Month 2 (Practise): Take ownership of candidate trackers, attendance registers & scheduling.", 15, y); y += 6;
-        doc.text("• Month 3 (Grow): Review performance metrics, refine Excel skills & specialize in TA or Ops.", 15, y); y += 12;
-
-        doc.setFontSize(8);
-        doc.setTextColor(120, 120, 120);
-        doc.text("(c) 2026 HR Success Hub. Verified Candidate Edition. All rights reserved.", 15, y);
-
-        // Save valid PDF document
-        doc.save("HR_Interview_Success_Playbook_2026.pdf");
+        // Trigger direct download of HR_Interview_Success_Playbook_2026_PREMIUM_.pdf product file
+        const link = document.createElement("a");
+        link.href = "/HR_Interview_Success_Playbook_2026_PREMIUM_.pdf";
+        link.download = "HR_Interview_Success_Playbook_2026_PREMIUM_.pdf";
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
 
         setDownloading(false);
         setDownloadSuccess(true);
       } catch (err) {
-        console.error("PDF generation error:", err);
+        console.error("PDF download error, falling back to generated PDF:", err);
+        try {
+          const doc = new jsPDF();
+          doc.setFillColor(0, 27, 61);
+          doc.rect(0, 0, 210, 35, 'F');
+          doc.setTextColor(255, 215, 0);
+          doc.setFontSize(18);
+          doc.setFont("helvetica", "bold");
+          doc.text("HR INTERVIEW SUCCESS PLAYBOOK 2026 PREMIUM", 15, 18);
+          doc.save("HR_Interview_Success_Playbook_2026_PREMIUM_.pdf");
+        } catch (e) {
+          console.error("Fallback failed:", e);
+        }
         setDownloading(false);
         setDownloadSuccess(true);
       }
-    }, 600);
+    }, 400);
   };
 
   return (
@@ -218,7 +93,7 @@ export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) =
               </div>
               <div>
                 <h2 className="text-base sm:text-lg font-bold text-white leading-snug">
-                  Step 1: Download HR Playbook 2026 PDF
+                  Step 1: Download HR Playbook 2026 Premium PDF
                 </h2>
                 <p className="text-[11px] sm:text-xs text-blue-300 mt-0.5">
                   Complete 11 Modules • 50 HR Q&As • Payroll Formulas • Excel Templates
