@@ -3,16 +3,8 @@ import { pixelTracker } from './utils/metaPixel';
 import { UrgencyTicker } from './components/UrgencyTicker';
 import { RecentPurchasePopup } from './components/RecentPurchasePopup';
 import { HeroSection } from './components/HeroSection';
-import { ProblemSection } from './components/ProblemSection';
 import { WhatYouGetSection } from './components/WhatYouGetSection';
-import { HeroFeatureSection } from './components/HeroFeatureSection';
-import { RecruitmentProcessSection } from './components/RecruitmentProcessSection';
-import { HrDocumentsSection } from './components/HrDocumentsSection';
-import { PayrollExcelSection } from './components/PayrollExcelSection';
 import { WhoIsThisForSection } from './components/WhoIsThisForSection';
-import { ValueStackSection } from './components/ValueStackSection';
-import { HowItWorksSection } from './components/HowItWorksSection';
-import { WhyDifferentSection } from './components/WhyDifferentSection';
 import { TestimonialsSection } from './components/TestimonialsSection';
 import { FaqSection } from './components/FaqSection';
 import { FinalCtaSection } from './components/FinalCtaSection';
@@ -20,7 +12,6 @@ import { StickyMobileBar } from './components/StickyMobileBar';
 import { PlaybookReaderModal } from './components/PlaybookReaderModal';
 import { LegalModal } from './components/LegalModal';
 import { ThankYouPage } from './components/ThankYouPage';
-import { MetaPixelTrackerWidget } from './components/MetaPixelTracker';
 import { handleCtaClick } from './utils/ctaConfig';
 
 export default function App() {
@@ -70,47 +61,21 @@ export default function App() {
         onOpenSamplePreview={handleOpenSamplePreview}
       />
 
-      {/* SECTION 2 — PROBLEM / PAIN POINT */}
-      <ProblemSection />
-
-      {/* SECTION 3 — WHAT YOU'LL GET */}
+      {/* SECTION 2 — WHAT YOU'LL GET (Key Modules Summary) */}
       <WhatYouGetSection
         onOpenSamplePreview={handleOpenSamplePreview}
       />
 
-      {/* SECTION 4 — HERO FEATURE (50 HR Interview Questions) */}
-      <HeroFeatureSection
-        onOpenSamplePreview={handleOpenSamplePreview}
-      />
-
-      {/* SECTION 5 — PRACTICAL HR KNOWLEDGE (Recruitment Lifecycle) */}
-      <RecruitmentProcessSection />
-
-      {/* SECTION 6 — HR DOCUMENTS */}
-      <HrDocumentsSection />
-
-      {/* SECTION 7 — PAYROLL + EXCEL */}
-      <PayrollExcelSection />
-
-      {/* SECTION 8 — WHO IS THIS FOR? */}
+      {/* SECTION 3 — WHO IS THIS FOR? */}
       <WhoIsThisForSection />
 
-      {/* SECTION 9 — WHAT YOU RECEIVE (Value Stack) */}
-      <ValueStackSection />
-
-      {/* SECTION 10 — HOW IT WORKS */}
-      <HowItWorksSection />
-
-      {/* SECTION 11 — WHY THIS GUIDE IS DIFFERENT */}
-      <WhyDifferentSection />
-
-      {/* SECTION 12 — 20+ SCROLLABLE TESTIMONIALS (NAMES & CITIES) */}
+      {/* SECTION 4 — TESTIMONIALS & REVIEWS */}
       <TestimonialsSection />
 
-      {/* SECTION 13 — FAQ */}
+      {/* SECTION 5 — FAQ */}
       <FaqSection />
 
-      {/* SECTION 14 — FINAL CTA */}
+      {/* SECTION 6 — FINAL CTA */}
       <FinalCtaSection />
 
       {/* STICKY MOBILE CTA BAR (md:hidden) */}

@@ -17,22 +17,20 @@ class MetaPixelTracker {
     });
   }
 
-  public trackPurchase(orderId: string) {
-    // Prevent duplicate Purchase tracking for same order
-    const exists = this.eventLogs.some(
-      (log) => log.eventName === 'Purchase' && log.params?.order_id === orderId
-    );
-    if (exists) {
-      console.warn(`[Meta Pixel] Purchase event already logged for order ${orderId}. Skipping duplicate.`);
-      return;
+  public trackPurchase(orderId?: string) {
+    if (!sessionStorage.getItem("hr_purchase_tracked")) {
+      const generatedId = orderId || "HR_299_" + Date.now();
+      this.fireEvent('Purchase', {
+        value: 299,
+        currency: 'INR',
+        content_name: 'HR Interview Success Playbook 2026',
+        content_type: 'digital_product',
+        order_id: generatedId
+      });
+      sessionStorage.setItem("hr_purchase_tracked", "true");
+    } else {
+      console.log("[Meta Pixel] Purchase event already tracked in session.");
     }
-
-    this.fireEvent('Purchase', {
-      value: 299,
-      currency: 'INR',
-      content_name: 'HR Interview Success Playbook 2026',
-      order_id: orderId
-    });
   }
 
   private fireEvent(eventName: 'PageView' | 'InitiateCheckout' | 'Purchase', params?: MetaPixelEvent['params']) {

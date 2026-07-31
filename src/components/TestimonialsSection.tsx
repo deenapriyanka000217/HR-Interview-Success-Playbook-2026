@@ -1,27 +1,66 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { TESTIMONIALS_DATA } from '../data/testimonialsData';
-import { Star, CheckCircle2, MessageSquare, MapPin, Search } from 'lucide-react';
+import { Star, StarHalf, CheckCircle2, MessageSquare, MapPin } from 'lucide-react';
 
 export const TestimonialsSection: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState<string>('');
+  const renderStars = (rating: number) => {
+    const fullStars = Math.floor(rating);
+    const hasHalfStar = rating % 1 !== 0;
+    const emptyStars = 5 - Math.ceil(rating);
 
-  const filteredTestimonials = TESTIMONIALS_DATA.filter(
-    (item) =>
-      item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.comment.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.role.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+    return (
+      <div className="flex items-center gap-0.5" aria-label={`${rating} stars`}>
+        {[...Array(fullStars)].map((_, i) => (
+          <Star key={`full-${i}`} className="w-3.5 h-3.5 fill-[#FFD700] text-[#FFD700]" />
+        ))}
+        {hasHalfStar && (
+          <StarHalf key="half" className="w-3.5 h-3.5 fill-[#FFD700] text-[#FFD700]" />
+        )}
+        {[...Array(emptyStars)].map((_, i) => (
+          <Star key={`empty-${i}`} className="w-3.5 h-3.5 text-blue-900/60 fill-blue-950/40" />
+        ))}
+        <span className="text-[11px] font-bold text-[#FFD700] ml-1">{rating}</span>
+      </div>
+    );
+  };
+
+  // Split testimonials into two groups for dual smooth left-scrolling marquee rows
+  const row1 = TESTIMONIALS_DATA.slice(0, 11);
+  const row2 = TESTIMONIALS_DATA.slice(11);
+
+  // Duplicate arrays for seamless infinite leftward scrolling
+  const marqueeRow1 = [...row1, ...row1];
+  const marqueeRow2 = [...row2, ...row2];
 
   return (
-    <section id="testimonials-section" className="py-12 sm:py-16 px-4 bg-[#00142E] text-white border-b border-blue-900/40">
-      <div className="max-w-6xl mx-auto space-y-8">
+    <section id="testimonials-section" className="py-12 sm:py-16 bg-[#00142E] text-white border-b border-blue-900/40 overflow-hidden">
+      <style>{`
+        @keyframes scrollLeft {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        .animate-scroll-left {
+          display: flex;
+          width: max-content;
+          animation: scrollLeft 45s linear infinite;
+        }
+        .animate-scroll-left-fast {
+          display: flex;
+          width: max-content;
+          animation: scrollLeft 38s linear infinite;
+        }
+        .animate-scroll-left:hover, .animate-scroll-left-fast:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
+
+      <div className="max-w-6xl mx-auto px-4 space-y-8">
         
         {/* Section Header */}
         <div className="text-center space-y-3 max-w-3xl mx-auto">
           <div className="inline-flex items-center gap-2 bg-[#002B5C] border border-blue-400/30 text-[#FFD700] px-3.5 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
             <MessageSquare className="w-3.5 h-3.5" />
-            <span>20+ Real Candidate Success Stories</span>
+            <span>Candidate Success Stories</span>
           </div>
           
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white tracking-tight">
@@ -29,104 +68,117 @@ export const TestimonialsSection: React.FC = () => {
           </h2>
           
           <p className="text-blue-100 text-sm sm:text-base font-medium max-w-2xl mx-auto">
-            See how freshers and candidates from cities across India used this playbook to crack their HR interviews and land offer letters.
+            Real candidate feedback from freshers and job seekers who used this playbook to crack their HR interviews.
           </p>
 
           <div className="flex items-center justify-center gap-1.5 pt-1">
-            {[...Array(5)].map((_, i) => (
+            {[...Array(4)].map((_, i) => (
               <Star key={i} className="w-5 h-5 fill-[#FFD700] text-[#FFD700]" />
             ))}
-            <span className="text-sm font-bold text-white ml-2">4.9 / 5.0 Average Rating</span>
+            <StarHalf className="w-5 h-5 fill-[#FFD700] text-[#FFD700]" />
+            <span className="text-sm font-bold text-white ml-2">4.8 / 5.0 Rating (22 Verified Reviews)</span>
           </div>
         </div>
 
-        {/* Search & Filter Bar */}
-        <div className="flex flex-col sm:flex-row items-center justify-between gap-4 max-w-4xl mx-auto bg-[#002B5C] border border-blue-400/20 p-3 sm:p-4 rounded-2xl">
-          <div className="relative w-full sm:w-72">
-            <Search className="w-4 h-4 text-blue-300 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Search by city or keyword..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-9 pr-3 py-2 bg-[#001B3D] border border-blue-400/30 rounded-xl text-xs sm:text-sm text-white placeholder-blue-300/60 focus:outline-hidden focus:border-[#FFD700]"
-            />
-          </div>
+      </div>
 
-          <div className="text-xs text-blue-200 font-semibold flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Showing {filteredTestimonials.length} Verified Reviews</span>
-          </div>
-        </div>
-
-        {/* Scrollable Testimonials Grid Container */}
-        <div className="max-h-[620px] overflow-y-auto pr-2 custom-scrollbar space-y-4">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {filteredTestimonials.map((item) => (
+      {/* Smooth Horizontal Left-Scrolling Testimonial Rows */}
+      <div className="mt-8 space-y-4">
+        {/* Marquee Row 1 */}
+        <div className="relative w-full overflow-x-auto custom-scrollbar py-2">
+          <div className="animate-scroll-left gap-4 px-4">
+            {marqueeRow1.map((item, idx) => (
               <div
-                key={item.id}
-                className="bg-[#002B5C] border border-blue-400/20 hover:border-[#FFD700]/40 rounded-2xl p-5 space-y-3 flex flex-col justify-between transition-colors shadow-lg"
+                key={`r1-${item.id}-${idx}`}
+                className="w-[290px] sm:w-[340px] shrink-0 bg-[#002B5C] border border-blue-400/20 hover:border-[#FFD700]/40 rounded-xl p-4 sm:p-5 space-y-3 flex flex-col justify-between shadow-lg transition-all"
               >
-                <div className="space-y-3">
-                  {/* Top bar: Stars & Verified Badge */}
+                <div className="space-y-2.5">
                   <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-0.5">
-                      {[...Array(item.rating)].map((_, i) => (
-                        <Star key={i} className="w-3.5 h-3.5 fill-[#FFD700] text-[#FFD700]" />
-                      ))}
-                    </div>
-
+                    {renderStars(item.rating)}
                     {item.verified && (
-                      <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full">
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full shrink-0">
                         <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                        Verified Purchase
+                        Verified
                       </span>
                     )}
                   </div>
 
-                  {/* Comment */}
-                  <p className="text-xs sm:text-sm text-blue-100 leading-relaxed italic">
+                  <p className="text-xs sm:text-sm text-blue-100 leading-relaxed italic line-clamp-4">
                     "{item.comment}"
                   </p>
                 </div>
 
-                {/* Candidate Info Footer */}
-                <div className="pt-3 border-t border-blue-800/80 flex items-center justify-between">
-                  <div>
-                    <h4 className="font-bold text-white text-sm flex items-center gap-1.5">
-                      <span>{item.name}</span>
+                <div className="pt-3 border-t border-blue-800/80 flex items-center justify-between gap-2">
+                  <div className="min-w-0">
+                    <h4 className="font-bold text-white text-xs sm:text-sm truncate">
+                      {item.name}
                     </h4>
-                    <p className="text-[11px] text-blue-300 font-medium">
+                    <p className="text-[11px] text-blue-300 font-medium truncate">
                       {item.role}
                     </p>
                   </div>
 
-                  <div className="text-right">
-                    <span className="inline-flex items-center gap-1 text-[11px] font-semibold text-[#FFD700] bg-[#001B3D] border border-blue-400/20 px-2 py-0.5 rounded-md">
-                      <MapPin className="w-3 h-3 text-[#FFD700]" />
-                      {item.city}
-                    </span>
-                    <p className="text-[10px] text-blue-400 mt-0.5">{item.date}</p>
-                  </div>
+                  <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold text-[#FFD700] bg-[#001B3D] border border-blue-400/20 px-2 py-0.5 rounded-md shrink-0">
+                    <MapPin className="w-3 h-3 text-[#FFD700]" />
+                    {item.city}
+                  </span>
                 </div>
               </div>
             ))}
           </div>
-
-          {filteredTestimonials.length === 0 && (
-            <div className="text-center py-10 bg-[#002B5C] rounded-2xl border border-blue-400/20 text-blue-200 text-sm">
-              No reviews found matching "{searchTerm}". Try another search keyword.
-            </div>
-          )}
         </div>
 
-        {/* Scroll helper note */}
-        <div className="text-center text-xs text-blue-300 flex items-center justify-center gap-1">
-          <span>💡</span>
-          <span>Scroll up/down inside the box to view all 22 verified reviews from candidates across India.</span>
-        </div>
+        {/* Marquee Row 2 */}
+        <div className="relative w-full overflow-x-auto custom-scrollbar py-2">
+          <div className="animate-scroll-left-fast gap-4 px-4">
+            {marqueeRow2.map((item, idx) => (
+              <div
+                key={`r2-${item.id}-${idx}`}
+                className="w-[290px] sm:w-[340px] shrink-0 bg-[#002B5C] border border-blue-400/20 hover:border-[#FFD700]/40 rounded-xl p-4 sm:p-5 space-y-3 flex flex-col justify-between shadow-lg transition-all"
+              >
+                <div className="space-y-2.5">
+                  <div className="flex items-center justify-between">
+                    {renderStars(item.rating)}
+                    {item.verified && (
+                      <span className="inline-flex items-center gap-1 text-[10px] font-bold text-emerald-300 bg-emerald-950/60 border border-emerald-500/30 px-2 py-0.5 rounded-full shrink-0">
+                        <CheckCircle2 className="w-3 h-3 text-emerald-400" />
+                        Verified
+                      </span>
+                    )}
+                  </div>
 
+                  <p className="text-xs sm:text-sm text-blue-100 leading-relaxed italic line-clamp-4">
+                    "{item.comment}"
+                  </p>
+                </div>
+
+                <div className="pt-3 border-t border-blue-800/80 flex items-center justify-between gap-2">
+                  <div className="min-w-0">
+                    <h4 className="font-bold text-white text-xs sm:text-sm truncate">
+                      {item.name}
+                    </h4>
+                    <p className="text-[11px] text-blue-300 font-medium truncate">
+                      {item.role}
+                    </p>
+                  </div>
+
+                  <span className="inline-flex items-center gap-1 text-[10px] sm:text-[11px] font-semibold text-[#FFD700] bg-[#001B3D] border border-blue-400/20 px-2 py-0.5 rounded-md shrink-0">
+                    <MapPin className="w-3 h-3 text-[#FFD700]" />
+                    {item.city}
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="text-center text-xs text-blue-300/80 mt-4 flex items-center justify-center gap-1.5">
+        <span className="text-[#FFD700]">←</span>
+        <span>Hover or touch cards to pause smooth auto-scrolling</span>
+        <span className="text-[#FFD700]">→</span>
       </div>
     </section>
   );
 };
+

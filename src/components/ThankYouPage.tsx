@@ -10,12 +10,47 @@ interface ThankYouPageProps {
 export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) => {
   const [downloading, setDownloading] = useState<boolean>(false);
   const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
+  const [countdown, setCountdown] = useState<number>(30);
   const whatsappGroupUrl = "https://chat.whatsapp.com/HD10h3atD4s03vNsGOtWlF?s=cl&p=a&ilr=0&amv=3";
 
   useEffect(() => {
     // Fire PageView event on Meta Pixel for Thank You Page
     pixelTracker.trackPageView();
-  }, []);
+
+    // Prevent duplicate Purchase event
+    if (!sessionStorage.getItem("hr_purchase_tracked")) {
+      if (typeof window !== "undefined" && (window as any).fbq) {
+        (window as any).fbq("track", "Purchase", {
+          value: 299,
+          currency: "INR",
+          content_name: "HR Interview Success Playbook 2026",
+          content_type: "digital_product",
+        });
+
+        console.log("Meta Purchase Event Fired");
+      }
+
+      pixelTracker.trackPurchase("HR_299_" + Date.now());
+      sessionStorage.setItem("hr_purchase_tracked", "true");
+    }
+
+    // Countdown redirect timer
+    const timer = setInterval(() => {
+      setCountdown((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          if (onBackToLanding) {
+            onBackToLanding();
+          } else {
+            window.location.href = "/";
+          }
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [onBackToLanding]);
 
   const handleDownloadPdf = () => {
     setDownloading(true);
@@ -274,6 +309,11 @@ export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) =
             <div className="text-[11px] text-emerald-300/80 text-center pt-0.5">
               <span>🔒 Private & Spam-Free Candidate Group</span>
             </div>
+          </div>
+
+          {/* Countdown timer banner */}
+          <div className="text-center pt-2 text-xs text-blue-200/90 font-medium">
+            <p>Redirecting to homepage in <strong className="text-[#FFD700] font-bold">{countdown}</strong> seconds...</p>
           </div>
 
           {/* Footer Navigation */}

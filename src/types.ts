@@ -51,6 +51,7 @@ export interface MetaPixelEvent {
     value?: number;
     currency?: string;
     content_name?: string;
+    content_type?: string;
     order_id?: string;
   };
   timestamp: string;

@@ -1,16 +1,9 @@
 import React, { useState } from 'react';
 import { FAQ_ITEMS } from '../data/playbookData';
-import { ChevronDown, HelpCircle, Search } from 'lucide-react';
+import { ChevronDown, HelpCircle } from 'lucide-react';
 
 export const FaqSection: React.FC = () => {
   const [openIdx, setOpenIdx] = useState<number | null>(0); // First open by default
-  const [searchTerm, setSearchTerm] = useState<string>('');
-
-  const filteredFaqs = FAQ_ITEMS.filter(
-    (item) =>
-      item.question.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      item.answer.toLowerCase().includes(searchTerm.toLowerCase())
-  );
 
   return (
     <section className="py-12 sm:py-16 px-4 bg-[#001B3D] text-white border-b border-blue-900/50">
@@ -32,21 +25,9 @@ export const FaqSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Quick Search */}
-        <div className="relative max-w-md mx-auto">
-          <Search className="w-4 h-4 text-blue-300 absolute left-3.5 top-1/2 -translate-y-1/2" />
-          <input
-            type="text"
-            placeholder="Search questions..."
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-[#002B5C] border border-blue-400/30 rounded-xl text-xs sm:text-sm text-white focus:outline-hidden focus:border-[#FFD700] placeholder-blue-300/60"
-          />
-        </div>
-
         {/* Accordion List */}
         <div className="space-y-3">
-          {filteredFaqs.map((faq, idx) => {
+          {FAQ_ITEMS.map((faq, idx) => {
             const isOpen = openIdx === idx;
             return (
               <div

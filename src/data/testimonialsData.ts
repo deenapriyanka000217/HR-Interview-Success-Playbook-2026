@@ -3,7 +3,7 @@ export interface Testimonial {
   name: string;
   city: string;
   role: string;
-  rating: number;
+  rating: number; // 5, 4.5, or 4
   comment: string;
   date: string;
   verified: boolean;
@@ -25,7 +25,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Rohan Sharma",
     city: "Delhi NCR",
     role: "Junior HR Executive",
-    rating: 5,
+    rating: 4.5,
     comment: "The CTC breakdown and payroll formulas are gold. Earlier I used to get confused between Gross Salary, Net Salary, and PF deductions. This guide explains it in plain simple terms.",
     date: "3 days ago",
     verified: true
@@ -45,7 +45,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Siddharth Rao",
     city: "Hyderabad",
     role: "Talent Acquisition Associate",
-    rating: 5,
+    rating: 4,
     comment: "Loved the 11-step recruitment lifecycle flowchart. In my interview, when they asked how I manage candidate sourcing to onboarding, I explained the exact workflow from this guide. Selected!",
     date: "1 week ago",
     verified: true
@@ -65,7 +65,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Mehul Joshi",
     city: "Pune",
     role: "Management Trainee - HR",
-    rating: 5,
+    rating: 4.5,
     comment: "Compact, straightforward, and zero fluff. Read the entire guide in two evenings before my campus drive. Cracked the final HR manager round easily.",
     date: "1 week ago",
     verified: true
@@ -85,7 +85,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Aman Gupta",
     city: "Lucknow",
     role: "MBA HR Student",
-    rating: 5,
+    rating: 4,
     comment: "Very well structured for Indian corporate standards. Statutory compliance basics like EPF, ESI, and LWF are explained cleanly.",
     date: "2 weeks ago",
     verified: true
@@ -95,7 +95,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Divya Sundaram",
     city: "Coimbatore",
     role: "Fresh Graduate",
-    rating: 5,
+    rating: 4.5,
     comment: "Downloaded the PDF instantly after payment. Read it on my phone during my commute to the interview venue. Helped me review KRA/KPI concepts right on time!",
     date: "2 weeks ago",
     verified: true
@@ -125,7 +125,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Karan Malhotra",
     city: "Chandigarh",
     role: "Career Switcher into HR",
-    rating: 5,
+    rating: 4.5,
     comment: "Switching from customer support to HR operations was intimidating. This playbook gave me the core industry jargon and documentation know-how I was missing.",
     date: "3 weeks ago",
     verified: true
@@ -145,7 +145,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Arjun Pillai",
     city: "Trivandrum",
     role: "Junior Recruiter",
-    rating: 5,
+    rating: 4,
     comment: "The ATS resume guidelines and job description drafting section are extremely practical. Must-read for any fresher.",
     date: "1 month ago",
     verified: true
@@ -155,7 +155,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Shweta Kulkarni",
     city: "Indore",
     role: "HR Executive",
-    rating: 5,
+    rating: 4.5,
     comment: "The Excel formula list saved my live desktop test during the interview round! VLOOKUP and COUNTIF formulas were right there.",
     date: "1 month ago",
     verified: true
@@ -175,7 +175,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Bhavna Jain",
     city: "Surat",
     role: "HR Intern",
-    rating: 5,
+    rating: 4.5,
     comment: "Clear explanations of HRA calculations, Gratuity rules, and Professional Tax limits across Indian states. 10/10 content quality.",
     date: "1 month ago",
     verified: true
@@ -195,7 +195,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Deepika Chawla",
     city: "Gurugram",
     role: "Talent Acquisition Associate",
-    rating: 5,
+    rating: 4,
     comment: "Every HR fresher should have this PDF saved on their phone. Short, precise, and covers real-world scenarios rather than textbook theory.",
     date: "1 month ago",
     verified: true
@@ -215,7 +215,7 @@ export const TESTIMONIALS_DATA: Testimonial[] = [
     name: "Aakanksha Roy",
     city: "Guwahati",
     role: "HR Trainee",
-    rating: 5,
+    rating: 4.5,
     comment: "The professional email templates for candidate follow-ups and interview scheduling were super useful in my daily intern tasks.",
     date: "1 month ago",
     verified: true
