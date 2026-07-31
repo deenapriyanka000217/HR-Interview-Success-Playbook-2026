@@ -10,7 +10,6 @@ interface ThankYouPageProps {
 export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) => {
   const [downloading, setDownloading] = useState<boolean>(false);
   const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
-  const [countdown, setCountdown] = useState<number>(30);
   const whatsappGroupUrl = "https://chat.whatsapp.com/HD10h3atD4s03vNsGOtWlF?s=cl&p=a&ilr=0&amv=3";
 
   useEffect(() => {
@@ -19,24 +18,7 @@ export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) =
 
     // Track Purchase event on Meta Pixel (strictly guarded against duplicate fires in session)
     pixelTracker.trackPurchase("HR_299_" + Date.now());
-
-    // Countdown redirect timer
-    const timer = setInterval(() => {
-      setCountdown((prev) => {
-        if (prev <= 1) {
-          clearInterval(timer);
-          if (onBackToLanding) {
-            onBackToLanding();
-          } else {
-            window.location.href = "/playbook";
-          }
-        }
-        return prev - 1;
-      });
-    }, 1000);
-
-    return () => clearInterval(timer);
-  }, [onBackToLanding]);
+  }, []);
 
   const handleDownloadPdf = () => {
     setDownloading(true);
@@ -295,25 +277,27 @@ export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) =
             </div>
           </div>
 
-          {/* Countdown timer banner */}
-          <div className="text-center pt-2 text-xs text-blue-200/90 font-medium">
-            <p>Redirecting to homepage in <strong className="text-[#FFD700] font-bold">{countdown}</strong> seconds...</p>
-          </div>
-
           {/* Footer Navigation */}
-          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-3 border-t border-blue-800 text-[11px] sm:text-xs text-blue-300">
+          <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pt-4 border-t border-blue-800 text-[11px] sm:text-xs text-blue-300">
             <span className="flex items-center gap-1">
               <ShieldCheck className="w-4 h-4 text-emerald-400 shrink-0" />
               Lifetime Access • Receipt Sent
             </span>
 
-            {onBackToLanding && (
+            {onBackToLanding ? (
               <button
                 onClick={onBackToLanding}
-                className="hover:text-white font-bold underline cursor-pointer"
+                className="text-[#FFD700] hover:text-white font-bold underline cursor-pointer transition-colors"
               >
                 ← Back to Playbook Landing Page
               </button>
+            ) : (
+              <a
+                href="/playbook"
+                className="text-[#FFD700] hover:text-white font-bold underline cursor-pointer transition-colors"
+              >
+                ← Back to Playbook Landing Page
+              </a>
             )}
           </div>
 
