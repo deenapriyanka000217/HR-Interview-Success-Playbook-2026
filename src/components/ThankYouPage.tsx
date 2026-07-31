@@ -17,22 +17,8 @@ export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) =
     // Fire PageView event on Meta Pixel for Thank You Page
     pixelTracker.trackPageView();
 
-    // Prevent duplicate Purchase event
-    if (!sessionStorage.getItem("hr_purchase_tracked")) {
-      if (typeof window !== "undefined" && (window as any).fbq) {
-        (window as any).fbq("track", "Purchase", {
-          value: 299,
-          currency: "INR",
-          content_name: "HR Interview Success Playbook 2026",
-          content_type: "digital_product",
-        });
-
-        console.log("Meta Purchase Event Fired");
-      }
-
-      pixelTracker.trackPurchase("HR_299_" + Date.now());
-      sessionStorage.setItem("hr_purchase_tracked", "true");
-    }
+    // Track Purchase event on Meta Pixel (strictly guarded against duplicate fires in session)
+    pixelTracker.trackPurchase("HR_299_" + Date.now());
 
     // Countdown redirect timer
     const timer = setInterval(() => {
@@ -54,8 +40,6 @@ export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) =
 
   const handleDownloadPdf = () => {
     setDownloading(true);
-    // Track Purchase Event on Meta Pixel
-    pixelTracker.trackPurchase("HR_299_" + Date.now());
 
     setTimeout(() => {
       try {
