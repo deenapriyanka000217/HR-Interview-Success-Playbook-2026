@@ -4,6 +4,7 @@ import { MetaPixelEvent } from '../types';
 class MetaPixelTracker {
   private eventLogs: MetaPixelEvent[] = [];
   private listeners: ((logs: MetaPixelEvent[]) => void)[] = [];
+  private purchaseTrackedInSession: boolean = false;
 
   public trackPageView() {
     this.fireEvent('PageView');
@@ -18,6 +19,11 @@ class MetaPixelTracker {
   }
 
   public trackPurchase(orderId?: string) {
+    if (this.purchaseTrackedInSession) {
+      console.log("[Meta Pixel] Purchase event already tracked in this session, skipping duplicate.");
+      return;
+    }
+    this.purchaseTrackedInSession = true;
     const generatedId = orderId || "HR_299_" + Date.now();
     this.fireEvent('Purchase', {
       value: 299,
