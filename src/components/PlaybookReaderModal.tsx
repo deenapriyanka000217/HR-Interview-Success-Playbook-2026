@@ -28,8 +28,22 @@ export const PlaybookReaderModal: React.FC<PlaybookReaderModalProps> = ({
       q.category.toLowerCase().includes(searchQ.toLowerCase())
   );
 
-  const handleDownloadPdf = () => {
-    window.print();
+  const handleDownloadPdf = async () => {
+    try {
+      const response = await fetch("/HR_Interview_Success_Playbook_2026_PREMIUM_.pdf");
+      if (!response.ok) throw new Error("Failed to fetch PDF");
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = "HR_Interview_Success_Playbook_2026_PREMIUM_.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+    } catch {
+      window.open("/HR_Interview_Success_Playbook_2026_PREMIUM_.pdf", "_blank");
+    }
   };
 
   return (

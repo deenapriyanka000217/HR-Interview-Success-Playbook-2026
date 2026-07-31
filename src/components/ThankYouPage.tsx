@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Download, MessageCircle, CheckCircle2, ShieldCheck, Sparkles, FileText, ArrowRight } from 'lucide-react';
-import { jsPDF } from 'jspdf';
 import { pixelTracker } from '../utils/metaPixel';
 
 interface ThankYouPageProps {
@@ -20,39 +19,41 @@ export const ThankYouPage: React.FC<ThankYouPageProps> = ({ onBackToLanding }) =
     pixelTracker.trackPurchase("HR_299_" + Date.now());
   }, []);
 
-  const handleDownloadPdf = () => {
+  const handleDownloadPdf = async () => {
     setDownloading(true);
 
-    setTimeout(() => {
-      try {
-        // Trigger direct download of HR_Interview_Success_Playbook_2026_PREMIUM_.pdf product file
-        const link = document.createElement("a");
-        link.href = "/HR_Interview_Success_Playbook_2026_PREMIUM_.pdf";
-        link.download = "HR_Interview_Success_Playbook_2026_PREMIUM_.pdf";
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-
-        setDownloading(false);
-        setDownloadSuccess(true);
-      } catch (err) {
-        console.error("PDF download error, falling back to generated PDF:", err);
-        try {
-          const doc = new jsPDF();
-          doc.setFillColor(0, 27, 61);
-          doc.rect(0, 0, 210, 35, 'F');
-          doc.setTextColor(255, 215, 0);
-          doc.setFontSize(18);
-          doc.setFont("helvetica", "bold");
-          doc.text("HR INTERVIEW SUCCESS PLAYBOOK 2026 PREMIUM", 15, 18);
-          doc.save("HR_Interview_Success_Playbook_2026_PREMIUM_.pdf");
-        } catch (e) {
-          console.error("Fallback failed:", e);
-        }
-        setDownloading(false);
-        setDownloadSuccess(true);
+    try {
+      const response = await fetch("/HR_Interview_Success_Playbook_2026_PREMIUM_.pdf");
+      if (!response.ok) {
+        throw new Error("Failed to fetch PDF file");
       }
-    }, 400);
+      const blob = await response.blob();
+      const blobUrl = URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = "HR_Interview_Success_Playbook_2026_PREMIUM_.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      setTimeout(() => URL.revokeObjectURL(blobUrl), 10000);
+
+      setDownloading(false);
+      setDownloadSuccess(true);
+    } catch (err) {
+      console.error("PDF download error, opening direct link:", err);
+      // Fallback direct window navigation to PDF
+      const link = document.createElement("a");
+      link.href = "/HR_Interview_Success_Playbook_2026_PREMIUM_.pdf";
+      link.target = "_blank";
+      link.download = "HR_Interview_Success_Playbook_2026_PREMIUM_.pdf";
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+
+      setDownloading(false);
+      setDownloadSuccess(true);
+    }
   };
 
   return (
