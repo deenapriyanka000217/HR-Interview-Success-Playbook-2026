@@ -1,9 +1,10 @@
 import { ModuleItem, QuestionItem, HrDocument, FaqItem, AudiencePersona } from '../types';
 
 export const HERO_BENEFITS = [
-  '50 Important HR Interview Questions with Model Answers',
-  'Practical HR Concepts for Freshers (Recruitment, Docs, Payroll)',
-  'Interview + 90-Day Career Preparation Roadmap'
+  '80+ Pages',
+  '50 Real Interview Questions',
+  'Model Answers',
+  'Instant PDF Download'
 ];
 
 export const PAIN_POINTS = [

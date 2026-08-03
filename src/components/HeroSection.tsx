@@ -20,9 +20,9 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSamplePreview })
         
         {/* Top Trust Badge */}
         <div className="flex justify-center lg:justify-start mb-5">
-          <div className="inline-flex items-center gap-2 bg-[#002B5C] border border-blue-400/30 text-blue-200 px-3.5 py-1.5 rounded-full text-xs sm:text-sm font-bold shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-[#002B5C] border border-[#FFD700]/40 text-[#FFD700] px-4 py-1.5 rounded-full text-xs sm:text-sm font-extrabold shadow-sm tracking-wider uppercase">
             <Sparkles className="w-3.5 h-3.5 text-[#FFD700] animate-pulse" />
-            <span className="text-[#FFD700] tracking-wider uppercase text-center">HR CAREER & INTERVIEW PREPARATION GUIDE 2026</span>
+            <span>CRACK YOUR HR INTERVIEW IN THE NEXT 7 DAYS</span>
           </div>
         </div>
 
@@ -32,22 +32,22 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSamplePreview })
           <div className="lg:col-span-7 space-y-6 text-center lg:text-left">
             
             <div className="space-y-3">
-              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
-                STARTING YOUR CAREER IN HR?
-                <span className="block text-blue-400 mt-1 font-semibold text-2xl sm:text-3xl lg:text-4xl">
-                  Prepare for Your Next HR Interview With Confidence.
-                </span>
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white leading-tight uppercase">
+                CRACK YOUR HR INTERVIEW IN THE NEXT 7 DAYS
               </h1>
-              <p className="text-blue-100 text-sm sm:text-base lg:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 font-normal">
-                A practical HR career and interview preparation playbook covering commonly asked interview questions, recruitment fundamentals, payroll basics, HR documentation, Excel skills, professional communication and more.
+              <p className="text-xl sm:text-2xl font-bold text-[#FFD700]">
+                Stop Guessing Interview Answers.
+              </p>
+              <p className="text-blue-100 text-base sm:text-lg leading-relaxed max-w-2xl mx-auto lg:mx-0 font-medium">
+                Learn the exact HR questions recruiters ask.
               </p>
             </div>
 
-            {/* 3 Short Benefits */}
-            <div className="space-y-2.5 pt-1 max-w-xl mx-auto lg:mx-0">
+            {/* Checklist items */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1 max-w-xl mx-auto lg:mx-0">
               {HERO_BENEFITS.map((benefit, idx) => (
-                <div key={idx} className="flex items-start justify-center lg:justify-start gap-3 text-blue-100 text-xs sm:text-sm font-medium text-left">
-                  <div className="bg-emerald-500/20 text-emerald-400 p-1 rounded-full mt-0.5 shrink-0">
+                <div key={idx} className="flex items-center justify-start gap-2.5 text-white text-sm sm:text-base font-bold text-left bg-[#002B5C]/60 border border-blue-400/20 px-3.5 py-2 rounded-xl">
+                  <div className="bg-emerald-500/20 text-emerald-400 p-1 rounded-full shrink-0">
                     <CheckCircle2 className="w-4 h-4" />
                   </div>
                   <span>{benefit}</span>
@@ -69,9 +69,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({ onOpenSamplePreview })
               {/* Centered Price Arrangement */}
               <div className="flex flex-col items-center lg:items-start space-y-1 py-1">
                 <div className="flex items-baseline gap-2">
-                  <span className="text-xs uppercase text-blue-300 font-bold">TODAY</span>
-                  <span className="text-3xl sm:text-4xl font-black text-[#FFD700] tracking-tight">
-                    ₹299
+                  <span className="text-2xl sm:text-3xl font-extrabold text-[#FFD700] tracking-tight">
+                    Only ₹299 Today
                   </span>
                 </div>
                 <p className="text-xs text-blue-200 font-medium text-center lg:text-left">
